@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+void bubbleSort(vector<int>& arr, int n)
+{   
+    for(int i=1;i<n;i++)
+    {bool s =false;
+      for (int j = 0; j < n-i; j++) {
+        if (arr[j]>arr[j+1])
+        { s= true;
+          swap(arr[j],arr[j+1]);}
+      }
+      if(s==false)
+      {
+        break;
+      }
+    }
+}
