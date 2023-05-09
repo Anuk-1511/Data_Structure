@@ -1,0 +1,56 @@
+#include <bits/stdc++.h> 
+
+bool ispos(vector<int> p , int n,int m, int mid)
+{
+	int stcount = 1;
+	int psum=0;
+
+	for(int i =0; i<n;i++)
+	{
+		if(psum + p[i] <= mid)
+		{
+			psum += p[i];
+		}
+		else
+		{
+			stcount++;
+			if(stcount>m || p[i]>mid){
+				return false;
+			}
+			psum = p[i];
+		}
+	}
+	return true;
+}
+int allocateBooks(vector<int> &pages, int n, int b)
+{
+	int s = 0;
+	int sum =0;
+
+	for(int i = 0;i<n;i++)
+	{
+		sum+= pages[i];
+	}
+
+
+	int e=sum;
+    int ans = -1;
+	int mid = s + (e-s)/2;
+
+	while(s<=e)
+	{
+		if(ispos(pages,n,b,mid))
+		{
+			ans=mid;
+			e = mid-1;
+		}
+		else
+		{
+			s=mid+1;
+			
+		}
+		mid = s + (e-s)/2;
+	}
+
+	return ans;
+}
