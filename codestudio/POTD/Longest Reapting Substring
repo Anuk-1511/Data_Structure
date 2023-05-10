@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+int longestRepeatingSubstring(string &str, int k)
+{
+    int n = str.length();
+    vector<int> count(26,0);
+    int maxc = 0;
+    int maxlen = 0;
+    int s= 0;
+
+    for(int e = 0 ; e<n ; ++e)
+    {
+        int chindex = str[e]-'a';
+        count[chindex]++;
+        maxc = max(maxc,count[chindex]);
+
+        if(e-s+1-maxc <=k)
+        {
+            maxlen = max(maxlen , e-s+1);
+        }
+        else
+        {
+            count[str[s]-'a']--;
+            s++;
+        }
+    }
+    return maxlen;
+}
