@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& m, int target) {
+        int r = m.size();
+        int c = m[0].size();
+
+        int rindex = 0;
+        int cindex = c-1;
+
+        while(rindex < r && cindex>=0)
+        {
+            int el =  m[rindex][cindex];
+
+            if(el == target)
+            {
+                return 1;
+            }
+
+            if(el < target)
+            {
+                rindex++;
+            }
+            else
+            {
+                cindex--;
+            }
+        }
+
+        return 0;
+        
+    }
+};
