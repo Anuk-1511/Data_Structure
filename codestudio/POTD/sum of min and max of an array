@@ -1,0 +1,35 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int getmax(int *arr,int n)
+{
+	int res = arr[0];
+    for (int i = 1; i < n; i++)
+        res = Math.max(res, arr[i]);
+    return res;
+}
+int getmin(int *arr,int n)
+{
+	int temp = arr[0];
+	for(int i = 1;i<n;i++)
+	{
+		if(temp>arr[i])
+		{
+			temp = arr[i];
+		}
+	}
+	return temp;
+}
+int sumOfMaxMin(int arr[], int n){
+	int maxi = getmax(arr,n);
+	int mini = getmin(arr,n);
+
+	int sum = maxi + mini;
+	return sum;
+}
+
+int main()
+{
+	int arr[6] = {-1, -4, 5 ,8 ,9, 3};
+	cout<<sumOfMaxMin(arr,6);
+	return 0;
+}
