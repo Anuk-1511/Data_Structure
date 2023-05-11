@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+bool ispatternMatch(string word ,int n, string pattern )
+{
+    if(word.length() != pattern.length())
+    {
+        return false ;
+
+    }
+
+    unordered_map<char,char> charMap;
+    unordered_map<char,bool> mapped;
+
+    for(int i =0;i<word.length();i++)
+    {
+        char w = word[i];
+        char p = pattern[i];
+
+        if(charMap.find(p) != charMap.end())
+        {
+          if (charMap[p] != w) 
+          {
+            return false;
+          }
+        } 
+       else 
+       {
+          if (mapped[w]) 
+          {
+            return false;
+          }
+          charMap[p] = w;
+            mapped[w] = true;
+        }
+            
+    }
+    return true;
+} 
+vector<string> matchSpecificPattern(vector<string> words, int n, string pattern)
+{
+    vector<string> result;
+
+    for(string word : words)
+    {
+        if(ispatternMatch(word,n,pattern))
+        {
+            result.push_back(word);
+        }
+    }
+    return result;
+}
