@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+void findPermutations(string& str, string& perm, vector<string>& permutations, vector<bool>& used) {
+    if (perm.length() == str.length()) {
+        permutations.push_back(perm);
+        return;
+    }
+
+    for (int i = 0; i < str.length(); i++) {
+        if (used[i])
+            continue;
+
+        // Skip if the current character is the same as the previous character and it has not been used
+        if (i > 0 && str[i] == str[i - 1] && !used[i - 1])
+            continue;
+
+        used[i] = true;
+        perm.push_back(str[i]);
+        findPermutations(str, perm, permutations, used);
+        perm.pop_back();
+        used[i] = false;
+    }
+}
+
+vector<string> generatePermutations(string& str) {
+    vector<string> permutations;
+    sort(str.begin(), str.end());  
+    vector<bool> used(str.length(), false);
+    string perm;
+
+    findPermutations(str, perm, permutations, used);
+
+    return permutations;
+}
