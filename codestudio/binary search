@@ -1,0 +1,29 @@
+int bsearch(vector<int>& nums,int s,int e, int k)
+{
+    if(s>e)
+      return -1;
+
+    int mid = s + (e - s)/2;
+
+    if(nums[mid] == k)
+      return mid;
+    
+    if(nums[mid]<k)
+    {
+        return bsearch(nums,mid+1,e,k);
+
+    }
+    else{
+        return bsearch(nums,s,mid-1,k);
+    }
+} 
+int search(vector<int>& nums,int k) {
+    
+   int s = 0 ;
+   int e = nums.size()-1;
+
+   int ans = bsearch(nums,s,e,k);
+
+   return ans;
+
+}
