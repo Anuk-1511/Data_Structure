@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define pb push_back
+#define read_ll_int(x) long long int x;cin>>x
+#define read_int(x) int x;cin>>x
+#define read_str(name) string name;cin>>name
+#define fr(i,a,b) for(int i=a;i<b;i++)
+
+bool isSafe(int row, int col, vector<vector<int>>& board , int n ){
+    
+    int duprow= row, dupcol = col;
+    
+    while(row>=0 and col>=0){
+        if(board[row][col]==1) return false;
+        
+        row--;col--;
+    }
+    
+    col = dupcol;row= duprow;
+    
+    while(col>=0){
+        if(board[row][col]==1) return false;
+        col--;
+    }
+         col = dupcol;row= duprow;
+    while(row<n and col>=0){
+        if(board[row][col]==1){
+            return false;
+        }
+        row++;col--;
+    }
+    return true;
+}
+
+void solve (int col , vector<vector<int>>&board , vector<vector<int>>& res ,int n ){
+    if(col==n){
+       vector<int>temp;
+        fr(i,0,n){
+            fr(j,0,n){
+                temp.push_back(board[i][j]);
+            }
+        }
+        res.push_back(temp);
+        temp.clear();
+        return ;
+    }
+    
+    for(int row = 0 ;row<n;row++){
+        
+        if(isSafe(row,col,board, n)){
+            board[row][col] = 1;
+            solve(col+1,board, res, n );
+            board[row][col] = 0;
+        }
+    } 
+}
+
+vector<vector<int>> solveNQueens(int n) {
+    // Write your code here
+    vector<vector<int>>res;
+    vector<vector<int>>board(n,vector<int>(n,0));
+    solve(0,board ,res,n);
+    return res;    
+}
