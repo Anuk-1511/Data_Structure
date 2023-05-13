@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the linkedList class structure:
+
+    class Node {
+    public:
+        int data;
+        Node *next;
+
+        Node(int val) {
+            this->data = val;
+            next = NULL;
+        }
+        ~Node() {
+            if (next != NULL) {
+                delete next;
+            }
+        }
+};
+
+************************************************************/
+
+void merge(Node* head1, Node* head2)
+{
+    if(head2 == nullptr)
+    {
+        return;
+    }
+
+    Node* first=head1;
+    Node* second = head2;
+
+    while(second != nullptr)
+    {
+        Node* temp = first->next;
+        first->next = second;
+        second = second->next;
+        first->next->next = temp;
+        first = temp;
+    }
+    
+}
