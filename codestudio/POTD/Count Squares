@@ -1,0 +1,13 @@
+#include <bits/stdc++.h> 
+int countSquares(int n, int m)
+{
+    long long result =0;
+    const int MOD = 1000000007;
+
+    for(int i=1; i<= min(n,m)%MOD;i++)
+    {
+        long long size = ((n-i+1)*(m-i+1))%MOD;
+        result = (result + size)%MOD;    
+    }
+    return result;
+}
