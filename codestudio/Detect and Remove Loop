@@ -1,0 +1,79 @@
+/*************************************************
+    
+    class Node {
+        public :
+
+        int data;
+        Node *next;
+
+        Node(int data) {
+            this -> data = data;
+            this -> next = NULL;
+        }
+    };
+
+*************************************************/
+
+Node* floydDetect(Node* head)
+{
+    if(head == NULL)
+    {
+        return NULL;
+    }
+  Node* s = head;
+  Node* f = head;
+    while(s!=NULL && f!=NULL)
+    {
+        f = f->next;
+        if(f != NULL)
+        {
+            f = f->next;
+        }
+        s = s->next;
+        if(s == f)
+        {
+            return s;
+        }
+    }
+    return NULL;
+}
+
+Node* getstart(Node* head)
+{
+    if(head == NULL)
+    {
+        return NULL;
+    }
+    Node* f = floydDetect(head);
+    if(f == NULL)
+     return NULL;
+    Node* s = head;
+
+    while(s!=f)
+    {
+        s = s->next;
+        f = f->next;
+    }
+
+    return s;
+}
+Node *removeLoop(Node *head)
+{
+    // Write your code here.
+
+    if(head == NULL)
+    {
+        return NULL;
+    }
+
+    Node* start = getstart(head);
+    if(start == NULL)
+        return head;
+    Node* temp = start;
+    while(temp -> next != start)
+    {
+        temp = temp->next;
+    }
+    temp->next = NULL;
+    return head;
+}
