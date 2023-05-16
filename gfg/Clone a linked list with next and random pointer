@@ -1,0 +1,59 @@
+class Solution
+{
+    void insert(Node* &head,Node* &tail,int d)
+    {
+        
+        Node* newNode = new Node(d);
+        
+        if(head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    public:
+    Node *copyList(Node *head)
+    {
+        //Write your code here
+        
+        Node* cloneh=NULL;
+        Node*clonet = NULL;
+        
+        Node* temp = head;
+        
+        while(temp != NULL)
+        {
+            insert(cloneh,clonet,temp->data);
+            temp = temp->next;
+        }
+        
+        unordered_map<Node*,Node*> old;
+        
+        temp=head;
+        
+        Node* temp2 = cloneh;
+        while(temp != NULL && temp2 != NULL)
+        {
+            old[temp] =temp2;
+            temp = temp->next;
+            temp2 = temp2->next;
+        }
+        
+        temp =head;
+        temp2 = cloneh;
+        
+        while(temp != NULL)
+        {
+            temp2 -> arb = old[temp->arb];
+             temp = temp->next;
+            temp2 = temp2->next;
+        }
+        return cloneh;
+    }
+
+};
