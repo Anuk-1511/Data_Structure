@@ -1,0 +1,58 @@
+/************************************************************
+
+    Following is the linked list node structure
+
+    template <typename T>
+    class Node {
+        public:
+        T data;
+        Node* next;
+
+        Node(T data) {
+            next = NULL;
+            this->data = data;
+        }
+
+        ~Node() {
+            if (next != NULL) {
+                delete next;
+            }
+        }
+    };
+
+************************************************************/
+Node<int>* sortTwoLists(Node<int>* a, Node<int>* b){
+    if(a==NULL)  return b;
+    if(b==NULL)  return a;
+    
+    Node<int>* head = new Node<int>(-1);
+    Node<int>* tmp = head;
+    while(a and b){
+        if(a->data >= b->data){
+            tmp->next = b;
+            b = b->next;
+        }
+        else{
+            tmp->next = a;
+            a = a->next;
+        }
+
+        tmp = tmp->next;
+    }
+
+    tmp->next = !a? b : a;
+    return head->next;
+}
+
+Node<int>* mergeKLists(vector<Node<int>*> &arr){
+    if(arr.size()==0) return NULL;
+    
+    int lvl=1;
+    while(lvl<arr.size()){
+        for(int i=0; i+lvl<arr.size(); i+=lvl*2)
+            arr[i] = sortTwoLists(arr[i], arr[i+lvl]);
+        lvl*=2;
+    }
+
+    return arr[0];
+}
