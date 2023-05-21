@@ -1,0 +1,42 @@
+class Solution
+{
+public:
+    
+    void solve(Node* root , int s ,int &maxs,int l,int &maxl )
+    {
+        if(root == NULL)
+        {
+            if(l>maxl)
+            {
+                maxl = l;
+                maxs = s;
+            }
+            
+            else if(l == maxl)
+                 {
+                     maxs = max(s,maxs);
+                 }
+                 
+          return;
+        }
+        
+        s = s + root->data;
+        
+        solve(root->left ,s,maxs,l+1,maxl);
+        solve(root->right ,s,maxs,l+1,maxl);
+    }
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        //code here
+        int len=0;
+        int maxl = 0;
+        
+        int sum =0;
+        int maxs =  INT_MIN;
+        
+        solve(root,sum,maxs,len,maxl);
+        
+        return maxs;
+        
+    }
+};
