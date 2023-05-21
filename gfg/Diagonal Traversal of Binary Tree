@@ -1,0 +1,34 @@
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+void diagonalTraversalUtil(Node* node, int d, unordered_map<int, vector<int>> &diagonalPrint)
+{
+    if(!node) return;
+   
+    diagonalPrint[d].push_back(node->data);
+ 
+    diagonalTraversalUtil(node->left, d + 1, diagonalPrint);
+ 
+    diagonalTraversalUtil(node->right, d, diagonalPrint);
+}
+vector<int> diagonal(Node *root)
+{
+    vector<int> ans;
+    unordered_map<int, vector<int>> diagonalPrint;
+  
+    diagonalTraversalUtil(root, 0, diagonalPrint);
+    
+    for (int i = 0; i < diagonalPrint.size(); i++)
+    {
+        for (int j: diagonalPrint[i])
+        {
+            ans.push_back(j);
+        }
+    }
+    return ans;
+    
+}
