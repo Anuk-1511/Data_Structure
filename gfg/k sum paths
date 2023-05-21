@@ -1,0 +1,79 @@
+/*
+struct Node 
+{
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+/*class Solution{
+  public:
+    void solve(Node* root, int k, int &count, vector<int> path) {
+        //base case
+        if(root == NULL)
+            return ;
+        
+        path.push_back(root->data);
+        
+        //left
+        solve(root->left, k, count, path);
+        //right
+        solve(root->right, k, count, path);
+        
+        //check for K Sum
+        
+        int size = path.size();
+        int sum = 0;
+        for(int i = size-1; i>=0; i--)  {
+            sum += path[i];
+            if(sum == k)
+                count++;
+        }
+        
+        path.pop_back();
+    }
+    int sumK(Node *root,int k)
+    {
+        vector<int> path;
+        int count = 0;
+        solve(root, k, count, path);
+        return count;
+    }
+};
+*/    
+class Solution {
+public:
+    int sumK(Node* root, int k) {
+        unordered_map<int, int> countMap;
+        return countPaths(root, 0, k, countMap);
+    }
+
+private:
+    int countPaths(Node* node, int currentSum, int k, unordered_map<int, int>& countMap) {
+        if (node == NULL) {
+            return 0;
+        }
+
+        currentSum += node->data;
+        int desiredSum = currentSum - k;
+        int result = countMap[desiredSum];
+
+        if (currentSum == k) {
+            result++;
+        }
+
+        countMap[currentSum]++;
+
+        result += countPaths(node->left, currentSum, k, countMap);
+        result += countPaths(node->right, currentSum, k, countMap);
+
+        countMap[currentSum]--;
+
+        return result;
+    }
+};
