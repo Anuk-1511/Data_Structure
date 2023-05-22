@@ -1,0 +1,98 @@
+/*
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution {
+  public:
+  Node* createp(Node* root , int t,map<Node*, Node*> &nodetp){
+      
+      Node* res = NULL;
+      
+      queue<Node*> q;
+      q.push(root);
+      nodetp[root] = NULL;
+      while(!q.empty())
+      {
+          Node* front = q.front();
+          q.pop();
+          
+          if(front->data == t)
+          {
+              res = front;
+          }
+          if(front -> left)
+          {
+              nodetp[front->left] = front;
+              q.push(front->left);
+          }
+          if(front->right)
+          {
+              nodetp[front->right] = front;
+              q.push(front->right);
+          }
+      }
+      return res;
+  }
+  
+  int burn(Node* root,map<Node*,Node*> &nodetp)
+  {
+      map<Node* , bool> visited;
+      
+      queue<Node*> q;
+      q.push(root);
+      visited[root] = true;
+      int ans =0;
+      
+      while(!q.empty())
+      {
+          bool flag =0;
+          int size = q.size();
+          for(int i=0;i<size;i++)
+          {
+              Node* front = q.front();
+              q.pop();
+              
+              
+              if(front->left && !visited[front->left])
+              {   flag =1;
+                  q.push(front->left);
+                  visited[front->left] = 1;
+              }
+              if(front->right && !visited[front->right])
+              {   flag =1;
+                  q.push(front->right);
+                  visited[front->right] = 1;
+              }
+              if(nodetp[front] && !visited[nodetp[front]])
+              {   flag = 1;
+                  q.push(nodetp[front]);
+                  visited[nodetp[front]]= 1;
+              }
+          }
+          if(flag == 1)
+          {
+              ans++;
+          }
+          
+      }
+      return ans;
+  }
+    int minTime(Node* root, int t) 
+    {
+        // Your code goes here
+        
+        map<Node*, Node*> nodetp;
+        Node* target = createp(root,t,nodetp);
+        
+        int ans = burn(target,nodetp);
+        return ans;
+    }
+};
