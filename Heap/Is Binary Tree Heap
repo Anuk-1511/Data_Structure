@@ -1,0 +1,68 @@
+// Structure of node
+/*struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};*/
+
+class Solution {
+public:
+    int cnt(struct Node* root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int ans = 1 + cnt(root->left) + cnt(root->right);
+
+        return ans;
+    }
+
+    bool iscbt(struct Node* root, int i, int c)
+    {
+        if (root == NULL)
+            return true;
+
+        if (i >= c)
+            return false;
+        else
+        {
+            bool left = iscbt(root->left, 2 * i + 1, c);
+            bool right = iscbt(root->right, 2 * i + 2, c);
+            return (left && right);
+        }
+    }
+
+    bool ismax(struct Node* root)
+    {
+        if (root->left == NULL && root->right == NULL)
+            return true;
+
+        if (root->right != NULL)
+        {
+            bool left = ismax(root->left);
+            bool right = ismax(root->right);
+
+            return (left && right && (root->data > root->left->data && root->data > root->right->data));
+        }
+        else
+        {
+            return (root->data > root->left->data);
+        }
+    }
+
+    bool isHeap(struct Node* tree) {
+        int i = 0;
+        int count = cnt(tree);
+        if (iscbt(tree, i, count) && ismax(tree))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+};
