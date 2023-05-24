@@ -1,0 +1,15 @@
+class Solution{
+    
+    public:
+    int getMaximum(int N , vector<int>arr){
+        long long total = 0;
+        for(int &x:arr){
+            total+=x;
+        }
+        for(int i = N;  i >= 1;i--){
+            if(total%i== 0)
+                return i;
+        }
+        return 0;
+    }
+};
