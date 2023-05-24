@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+
+void pradj(unordered_map<int,set<int> > &adj,vector<pair<int, int>> &edges)
+{
+    for(int i=0;i<edges.size();i++)
+    {
+        int u = edges[i].first;
+
+        int v = edges[i].second;
+
+        adj[u].insert(v);
+        adj[v].insert(u);
+    }
+}
+void bfs(unordered_map<int,set<int> > &adj,unordered_map<int,bool> &vi,
+               vector<int> &ans,int node)
+{
+     queue<int> q;
+     q.push(node);
+     vi[node] = 1;
+     while(!q.empty())
+     {
+         int f = q.front();
+         q.pop();
+
+         ans.push_back(f);
+         for(auto i: adj[f])
+         {
+             if(!vi[i])
+             {
+                 q.push(i);
+                 vi[i] =1;
+             }
+         }
+     }
+               
+}
+vector<int> BFS(int vertex, vector<pair<int, int>> edges)
+{
+    // Write your code here
+    
+    unordered_map<int,set<int> > adj;
+
+    vector<int> ans;
+
+    unordered_map<int,bool> vi;
+
+    pradj(adj,edges);
+
+    for(int i =0; i<vertex;i++)
+    {
+        if(!vi[i])
+        {
+            bfs(adj,vi,ans,i);
+        }
+    }
+   return ans;
+}
