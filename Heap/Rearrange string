@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+
+string reArrangeString(string &s)
+
+{
+
+    map<char,int>m;
+
+    int n=s.size();
+
+    for(int i=0;i<n;i++)m[s[i]]++;
+
+    vector<pair<int,char>>v;
+
+    for(auto i:m)v.push_back(make_pair(i.second,i.first));
+
+    sort(v.begin(),v.end());
+
+    reverse(v.begin(),v.end());
+
+    int idx=0;
+
+    for(auto i:v){
+
+        int val=i.first;
+
+        char key=i.second;
+
+        if(val>n/2+n%2)return "not possible";
+
+        while(val--){
+
+            if(idx>=n)idx=1;
+
+            s[idx]=key;
+
+            idx+=2;
+
+        }
+
+    }
+
+    return s;        
+
+}
