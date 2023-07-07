@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> rearrangeArray(std::vector<int>& A, int m) {
+    std::vector<std::pair<int, int>> diffArray;
+    
+    // Calculate the differences between array elements and m
+    for (int i = 0; i < A.size(); i++) {
+        int diff = std::abs(A[i] - m);
+        diffArray.push_back(std::make_pair(diff, i));
+    }
+    
+    // Sort the difference array first based on difference values and then based on the original index values
+    std::sort(diffArray.begin(), diffArray.end(), [](const std::pair<int, int>& a, const std::pair<int, int>& b){
+        if (a.first == b.first) {
+            return a.second < b.second;
+        }
+        return a.first < b.first;
+    });
+    
+    // Rearrange the array elements based on the sorted difference array
+    std::vector<int> rearrangedArray;
+    for (int i = 0; i < diffArray.size(); i++) {
+        rearrangedArray.push_back(A[diffArray[i].second]);
+    }
+    
+    return rearrangedArray;
+}
+
+int main() {
+    int T;
+    std::cin >> T;
+    
+    for (int i = 0; i < T; i++) {
+        int N, m;
+        std::cin >> N >> m;
+        
+        std::vector<int> A(N);
+        for (int j = 0; j < N; j++) {
+            std::cin >> A[j];
+        }
+        
+        std::vector<int> result = rearrangeArray(A, m);
+        
+        // Print the rearranged array
+        for (int j = 0; j < result.size(); j++) {
+            std::cout << result[j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    
+    return 0;
+}
