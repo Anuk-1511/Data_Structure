@@ -1,0 +1,40 @@
+int findMin(vector<int>& arr)
+{
+    int n = arr.size();
+    int low = 0;
+    int high = n - 1;
+
+    // Iterate till low is less than or equal to high.
+    while (low <= high)
+    {
+        // Case 1 - when element at low is less than or equal to element at high.
+        if (arr[low] <= arr[high])
+        {
+            return arr[low];
+        }
+
+        int mid = (low + high) / 2;
+        int next = (mid + 1) % n;
+        int previous = (mid + n - 1) % n;
+
+        // Case 2 - when element at mid is less than or equal to element at next and previous.
+        if (arr[mid] <= arr[next] && arr[mid] <= arr[previous])
+        {
+            return arr[mid];
+        }
+
+        // Case 3 - when element at mid is less than or equal to element at high.
+        else if (arr[mid] <= arr[high])
+        {
+            high = mid - 1; // Case 3
+        }
+
+        // Case 4 - when element at low is less than or equal to element at mid.
+        else if (arr[mid] >= arr[low])
+        {
+            low = mid + 1;
+        }
+    }
+
+    return -1;
+}
