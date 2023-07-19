@@ -1,0 +1,56 @@
+#include<climits>
+
+int minCostBST(vector<int> &arr, vector<int> &freq){
+
+    int n = freq.size();
+
+    vector<int> freqSum;
+    freqSum.push_back(0);
+
+    for(int num: freq){
+        freqSum.push_back(freqSum.back() + num);
+    }
+
+    // The `cost[i][j]` stores the optimal cost to construct BST from keys `i` to `j`.
+    vector<vector<int>> cost(n + 1, vector<int> (n + 1, 0));
+
+    // Base case: cost is equal to frequency for `i = j`.
+    for(int i = 0; i < n; i++){
+        cost[i][i] = freq[i];
+    }
+
+    // All sizes of sequences
+    for(int gap = 1; gap < n + 1; gap++){
+
+        // All starting points of sequences.
+        for(int i = 0; i < n - gap + 2; i++){
+
+            int j = min(i + gap - 1, n - 1);
+            cost[i][j] = INT_MAX;
+
+            // Consider each key as root and calculate the optimal cost.
+            for(int r = i; r < j + 1; r++){
+
+                int minSol = 0;
+
+                // Get the current node's cost
+                minSol += freqSum[j + 1] - freqSum[i];
+
+                // Add the optimal cost of the left subtree.
+                if(r != i){
+                    minSol += cost[i][r - 1];
+                }
+
+                // Add the optimal cost of the right subtree.
+                if(r != j){
+                    minSol += cost[r + 1][j];
+                }
+
+                cost[i][j] = min(minSol, cost[i][j]);
+            }
+        }
+    }
+
+    // Return the resultant cost.
+    return cost[0][n - 1];
+}
