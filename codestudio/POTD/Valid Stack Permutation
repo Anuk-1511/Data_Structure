@@ -1,0 +1,21 @@
+bool validStackPermutation(vector<int> &first, vector<int> &other){
+    stack<int> st;
+
+    int p = 0;
+
+    for (int i = 0; i < first.size(); i++){
+        st.push(first[i]);
+
+        while (!st.empty() && other[p] == st.top()){
+            p++;
+
+            st.pop();
+        }
+    }
+    if (st.empty()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
