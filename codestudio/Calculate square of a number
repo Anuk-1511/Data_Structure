@@ -1,0 +1,15 @@
+#include <bits/stdc++.h> 
+int calculateSquare(int num)
+{
+    //    Write your code here.
+   int sum=0;
+   if(num<0)
+   {
+       num = num *(-1);
+   }
+    for(int i=1;i<=num;i++)
+    {
+        sum += num;
+    }
+    return sum;
+}
