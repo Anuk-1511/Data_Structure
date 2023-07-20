@@ -1,0 +1,22 @@
+
+int FindFirstRepeatingDigit(string digitpattern) {
+
+    // LSB(1st bit) represent digit 0, bit at 2nd position represent 1 and so on.. in the variable bitset.
+    int bitset = 0;
+
+    for (int i = 0; i < digitpattern.length(); i++) {
+
+    	// storing the digit at current index in variable 'digit'.
+        int digit = digitpattern[i] - '0';
+
+        // Check if corresponding bit is set
+        if ((bitset & (1 << digit)) >= 1)
+            return digit;
+        else
+            // If not present then set the corresponding bit
+            bitset |= (1 << digit);
+    }
+    // Returning -1 if no digit is repeated in the string.
+    return -1;
+
+}
