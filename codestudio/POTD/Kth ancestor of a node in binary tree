@@ -1,0 +1,60 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+
+void getParent(BinaryTreeNode<int>* root, unordered_map<int, int>&parent) {
+
+    parent[root->data] = -1;
+    queue<BinaryTreeNode<int>*>q;
+    q.push(root);
+
+    while (!q.empty()) {
+        BinaryTreeNode<int>* front = q.front();
+        q.pop();
+
+        if (front->left) {
+            parent[front->left->data] = front->data;
+            q.push(front->left);
+        }
+
+        if (front->right) {
+            parent[front->right->data] = front->data;
+            q.push(front->right);
+        }
+    }
+}
+
+int findKthAncestor(BinaryTreeNode<int>* root, int targetNodeVal, int k) {
+
+    unordered_map<int, int>parent;
+    getParent(root, parent);
+    int cnt = 0;
+    while (parent.find(targetNodeVal) != parent.end() and targetNodeVal != -1) {
+        targetNodeVal = parent[targetNodeVal];
+        cnt++;
+        if (cnt == k) {
+            break;
+        }
+
+    }
+
+    return targetNodeVal;
+}
+
