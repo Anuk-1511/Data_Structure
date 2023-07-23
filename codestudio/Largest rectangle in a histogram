@@ -1,0 +1,78 @@
+#include <stack>
+
+int largestRectangle(vector < int > & heights) {
+
+    int n = heights.size();
+
+    /* 
+      The stack holds indexes of heights[] array.
+      The bars stored in stack are always in 
+      increasing order of their heights.
+    */
+    stack < int > s;
+
+    // Initialize max area.
+    int maxArea = 0;
+
+    // To store top of stack.
+    int topOfStack;
+
+    // To store area with top bar as the smallest bar.
+    int areaWithTop;
+
+    // Run through all bars of given histogram.
+    int i = 0;
+    while (i < n) {
+        /* 
+            If this bar is higher than the bar on top stack, 
+            push it to stack
+        */
+        if (s.empty() || heights[s.top()] <= heights[i]) {
+            s.push(i++);
+        }
+        /* 
+            If this bar is lower than top of stack, 
+            then calculate area of rectangle with stack top.
+        */
+        else {
+            topOfStack = s.top();
+            s.pop();
+
+            /*
+                Calculate the area with heights[topOfStack] 
+                stack as smallest bar.
+            */
+            if (s.empty()) {
+                areaWithTop = heights[topOfStack] * i;
+            } else {
+                areaWithTop = heights[topOfStack] * (i - s.top() - 1);
+            }
+
+            // Update max area, if needed.
+            if (maxArea < areaWithTop) {
+                maxArea = areaWithTop;
+            }
+        }
+    }
+
+    /* 
+      Now pop the remaining bars from stack and calculate
+      area with every popped bar as the smallest bar.
+    */
+    while (s.empty() == false) {
+        topOfStack = s.top();
+        s.pop();
+
+        if (s.empty()) {
+            areaWithTop = heights[topOfStack] * i;
+        } else {
+            areaWithTop = heights[topOfStack] * (i - s.top() - 1);
+        }
+
+        if (maxArea < areaWithTop) {
+            maxArea = areaWithTop;
+        }
+    }
+
+    return maxArea;
+}
