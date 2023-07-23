@@ -1,0 +1,100 @@
+#include<set>
+#include<vector>
+#include<string>
+#include<algorithm>
+
+class Trie{
+
+public:
+    Trie* children[26];
+
+    bool isLeaf;
+
+    Trie() {
+    	this->isLeaf = false;
+        for(int i = 0; i < 26; i++){
+            this->children[i] = NULL;
+        }
+    }
+    
+    void insert(string word){
+
+        Trie* curr = this;
+        for(char c: word){
+
+            if(curr->children[c-'a'] == NULL) {
+            	curr->children[c - 'a'] = new Trie();
+            }
+            curr = curr->children[c-'a'];
+        }
+
+        curr->isLeaf = true;
+    }
+};
+
+int dx[] = {0,0,1,-1,-1,-1,1,1};
+int dy[] = {-1,1,0,0,-1,1,-1,1};
+
+void possibleWordsUtil(Trie *root, vector<vector<char>> mat, vector<vector<bool>> visited, int i, int j, int n, int m, string curr, set<string> &st){
+
+	if(root->isLeaf == true){
+		st.insert(curr);
+	}
+
+	visited[i][j] = true;
+
+	for(int index=0;index<8;index++){
+
+		int x = i + dx[index];
+		int y = j + dy[index];
+
+		if(x < n && x >= 0 && y < m && y >= 0 && visited[x][y] == false){
+
+			int c = mat[x][y] - 'a';
+
+			if(root->children[c]){
+				possibleWordsUtil(root->children[c], mat, visited, x, y, n, m, curr+mat[x][y], st);
+			}
+		}
+	}
+
+	visited[i][j] = false;
+}
+
+vector<string> findPossibleWords(vector<string> arr, vector<vector<char>> mat){
+
+    Trie *root = new Trie();
+
+    for(string str: arr){
+        root->insert(str);
+    }
+	
+	int n = mat.size();
+	int m = mat[0].size();
+ 
+	set<string> st;
+
+	vector<vector<bool>> visited(n, vector<bool>(m, false));
+
+	string curr = "";
+
+	
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+			
+			if(root->children[mat[i][j] - 'a']){
+				curr.push_back(mat[i][j]);
+				possibleWordsUtil(root->children[mat[i][j] - 'a'], mat, visited, i, j, n, m, curr, st);
+				curr = "";
+			}
+		}
+	}
+
+	vector<string> res;
+
+	for(string str: st){
+		res.push_back(str);
+	}
+
+	return res;
+}
