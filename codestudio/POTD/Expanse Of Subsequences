@@ -1,0 +1,24 @@
+#include <algorithm>
+
+int expanseOfSubsequences(vector<int> &arr) {
+    // Size of array 'arr'.
+    int n = arr.size();
+    int mod = 1e9+7;
+
+    // Precompute powers of 2.
+    vector<long long> power(n, 1);
+    for(int i = 1; i < n; i++) {
+        power[i] = (power[i-1] * 2) % mod;
+    }
+
+    int result = 0;
+
+    sort(arr.begin(), arr.end());
+
+    for(int i = 0; i < n; i++) {
+        // Add contribution of cuurrent element in final answer. 
+        result = (result + arr[i] * (power[i] - power[n-i-1] + mod)) % mod;
+    }
+
+    return result;
+}
