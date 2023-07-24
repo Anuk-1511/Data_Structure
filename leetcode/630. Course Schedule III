@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int>>& courses) {
+        
+        int time =0;
+        sort(courses.begin(), courses.end(), [](const auto& a, const auto& b) {
+            return a[1] < b[1];
+        } );
+        
+        priority_queue<int> maxHeap;
+        
+        for(const vector<int>& course : courses){
+            const int duration = course[0];
+            const int lastday = course[1];
+            
+            maxHeap.push(duration);
+            time += duration;
+            
+            if(time > lastday)
+                time -= maxHeap.top() , maxHeap.pop();
+        }
+        
+        return maxHeap.size();
+        
+    }
+};
