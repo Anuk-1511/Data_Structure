@@ -1,0 +1,34 @@
+#include <queue>
+inline double getProfit(double c0, double c1) {
+    return (c0 + 1) / (c1 + 1) - c0 / c1;
+}
+
+double maxAverageWorkingRatio(vector<vector<int>>& bulbs, int n, int extra) {
+    pair<double, int> profits[n];
+
+    for (int i = 0; i < n; i++) {
+        double profit = getProfit(bulbs[i][0], bulbs[i][1]);
+        profits[i] = {profit, i};
+    }
+
+    priority_queue<pair<double, int>> pq(profits, profits + n);
+
+    for (int i = 0; i < extra; i++) {
+
+        int c = pq.top().second;
+        pq.pop();
+
+        bulbs[c][0]++;
+        bulbs[c][1]++;
+        pq.push({getProfit(bulbs[c][0], bulbs[c][1]), c});
+    }
+
+    double avg = 0;
+    for (auto c : bulbs) {
+        avg += (double)c[0] / c[1];
+    }
+
+    avg = avg / n;
+
+    return avg;
+}
