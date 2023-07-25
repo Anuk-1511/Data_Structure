@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+int countBits(int N) {
+
+    int count = 0;
+    int r;
+
+    while (N > 0) {
+
+        r = N % 2;
+        
+        if (r == 1)
+        {
+            count++;
+        }
+
+        N = N / 2;
+    }
+
+    return count;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    cout << countBits(n);
+    return 0;
+}
