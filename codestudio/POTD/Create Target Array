@@ -1,0 +1,40 @@
+#include<queue>
+
+int createTarget(vector<int> &target)
+{
+    int n = target.size();
+    int sum = 0;
+    int lastSum;
+
+    priority_queue<int> maxHeap(target.begin(), target.end());
+    for (int i = 0; i < n; i++)
+    {
+        sum = sum + target[i];
+    }
+
+    while (true) 
+    {
+
+        lastSum = maxHeap.top(); 
+
+        maxHeap.pop();
+
+        sum = sum - lastSum;
+
+        if (lastSum == 1 || sum == 1)
+        {
+            return 1;
+        }
+
+        if (lastSum < sum || sum == 0 || lastSum - sum == 0)
+        {
+            return 0;
+        }
+
+        lastSum = lastSum - sum;
+
+        sum = sum + lastSum;
+
+        maxHeap.push(lastSum);
+    }
+}
