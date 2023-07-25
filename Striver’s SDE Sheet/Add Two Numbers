@@ -1,0 +1,83 @@
+/**
+ * Definition of linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next) {
+ *          this->data = data;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+Node *addTwoNumbers(Node *num1, Node *num2)
+{
+    // Write your code here.
+
+    Node* curr1=num1;
+
+    Node* prev1=NULL;
+
+    Node* prev2=NULL;
+
+    Node* curr2=num2;
+
+    int carry=0;
+
+    int total=0;
+
+    int sum=0;
+
+    while(curr1!=NULL && curr2!=NULL)
+    {
+         total = curr1->data + curr2->data + carry;
+         carry=0;
+         sum = total%10;
+
+         carry=total/10;
+            curr2->data=sum;
+            prev1=curr1;
+            prev2=curr2;
+            curr1=curr1->next;
+            curr2=curr2->next;
+    }
+
+    while(curr1!=NULL)
+    {
+        total = curr1->data + carry;
+        carry=0;
+         sum = total%10;
+         carry=total/10;
+         Node* newnode =new Node(sum);
+         prev2->next=newnode;
+         prev2=newnode;
+         curr1=curr1->next;
+    }
+    while(curr2!=NULL)
+    {
+        total = curr2->data + carry;
+        carry=0;
+         sum = total%10;
+         carry=total/10;
+         curr2->data=sum;
+         prev2=curr2;
+         curr2=curr2->next;
+    }
+    if(carry!=0){
+        Node* newnode=new Node(carry);
+        prev2->next=newnode;
+        newnode->next=NULL;
+    }
+    return num2;
+}
