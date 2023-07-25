@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+void fill(vector<int> &arr, vector<int>& v, int i, int n, int sum) {
+   if (n == i) {
+       v.push_back(sum);
+       return;
+   }
+   fill(arr, v, i + 1, n, sum);
+   fill(arr, v, i + 1, n, sum+arr[i]);
+}
+
+vector<int> subsetSum(vector<int> num) {
+   vector<int> v;
+   fill(num, v, 0, num.size(), 0);
+   sort(v.begin(),v.end());
+   return v;
+}
