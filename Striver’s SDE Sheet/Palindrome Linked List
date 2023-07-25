@@ -1,0 +1,33 @@
+LinkedListNode<int> * rev(LinkedListNode<int> *head)
+{
+    LinkedListNode<int>*cur=head;
+    LinkedListNode<int> *prev=NULL;
+    LinkedListNode<int> *next=NULL;
+    while(cur)
+    {
+        next=cur->next;
+        cur->next=prev;
+        prev=cur;
+        cur=next;
+    }
+    return prev;
+}
+bool isPalindrome(LinkedListNode<int> *head) {
+    if(!head || !head->next) return true;
+    LinkedListNode<int> *slow=head;
+    LinkedListNode<int> *fast=head->next;
+    while(fast && fast->next)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    LinkedListNode<int> * temp=rev(slow->next);
+    while(temp)
+    {
+        if (temp->data!=head->data) return false;
+        temp=temp->next;
+        head=head->next;
+    }
+    return true;
+
+}
