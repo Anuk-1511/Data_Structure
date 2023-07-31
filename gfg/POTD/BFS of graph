@@ -1,0 +1,35 @@
+void bfs_utils(struct graph *g, int n, int m, int ans[]) {
+    struct Queue *q = createQueue(n);
+
+    int visit[n];
+    memset(visit, 0, sizeof(visit));
+    visit[0] = 1;
+
+    enqueue(q, 0);
+
+    int itr = 0;
+
+    while (!isEmpty(q)) {
+        int u = front(q);
+        dequeue(q);
+        ans[itr++] = u;
+        g->connected_with_zero++;
+
+        struct ListNode *curr = g->head[u];
+
+        while (curr != NULL) {
+            if (visit[curr->data] == 0) {
+                visit[curr->data] = 1;
+                enqueue(q, curr->data);
+            }
+            curr = curr->next;
+        }
+    }
+}
+
+int *bfs(struct graph *g, int n, int m) {
+    int *ans = (int *)malloc(n * sizeof(int));
+    bfs_utils(g, n, m, ans);
+
+    return ans;
+}
