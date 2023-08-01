@@ -1,0 +1,23 @@
+void dfs_utils(struct graph *g, int u, int visit[]) {
+    visit[u] = 1;
+
+    printf("%d ", u);
+    struct ListNode *ptr = g->head[u];
+
+    for (; ptr != NULL; ptr = ptr->next) {
+        if (visit[ptr->data] == 0) {
+            dfs_utils(g, ptr->data, visit);
+        }
+    }
+}
+
+void dfs(struct graph *g, int n, int m) {
+    int visit[n];
+    memset(visit, 0, sizeof(visit));
+
+    for (int i = 0; i < n; i++) {
+        if (visit[i] == 0) {
+            dfs_utils(g, i, visit);
+        }
+    }
+}
