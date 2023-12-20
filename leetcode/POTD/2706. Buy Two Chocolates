@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int buyChoco(vector<int>& prices, int money) {
+        
+        int a = INT_MAX;
+        int b = INT_MAX;
+        
+        for(const int price : prices)
+            if(price <= a){
+                b = a ;
+                a = price;
+            }else if(price < b){
+                b = price;
+            }
+        
+        const int m = a + b;
+        if(m > money)
+            return money;
+        else
+            return money - m;
+              
+    }
+};
