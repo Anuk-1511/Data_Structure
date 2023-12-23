@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool isPathCrossing(string path) {
+        
+        set <int> visited;
+        
+        visited.insert(0);
+
+        int x = 0;
+        int y = 0;
+
+        for(const char c : path)
+        {
+            switch(c){
+                case 'N': ++y;
+                          break;
+                case 'S': --y;
+                          break;
+                case 'E': ++x;
+                          break;
+                case 'W': --x;
+                          break;
+            }
+
+            const int k = x * 20001 + y;
+            if(visited.count(k))
+              return true;
+            visited.insert(k);
+        }
+        return false;
+    }
+};
