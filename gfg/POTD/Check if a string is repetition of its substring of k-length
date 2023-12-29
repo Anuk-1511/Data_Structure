@@ -1,0 +1,27 @@
+class Solution{
+
+public:
+
+	int kSubstrConcat (int n, string s, int k)
+	{
+		if (n == k) return 1;
+
+		if (n % k != 0) return 0;
+		
+		unordered_map <string, int> m;
+		for (int i = 0; i < n; i += k)
+		{
+			m[s.substr (i, k)]++;
+		}
+
+		if (m.size () == 1) return 1;
+		
+		if (m.size () != 2) return 0;
+
+		if (m.begin()->second == (n / k - 1) || m.begin()->second == 1)
+			return 1;
+			
+		return 0;
+	}
+
+};
