@@ -1,0 +1,33 @@
+class Solution{
+  public:
+
+    vector<string> winner(string arr[],int n)
+    {
+            unordered_map<string,int>mp;
+
+            for(int j=0;j<n;j++)
+            {
+                mp[arr[j]]++;
+            }
+            
+            int maxx=-1;
+            string answer="";
+
+            for(auto it=mp.begin();it!=mp.end();it++)
+            {
+                
+                if(it->second>maxx)
+                {
+                    maxx=it->second;
+                    answer=it->first;
+                }
+
+                else if(it->second == maxx && answer.compare(it->first) > 0)
+                    answer = it->first;
+            }
+
+            vector<string> vec = {answer,to_string(maxx)};
+
+            return vec;
+    }
+};
