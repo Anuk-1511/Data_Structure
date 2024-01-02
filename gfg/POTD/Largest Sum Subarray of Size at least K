@@ -1,0 +1,23 @@
+class Solution{
+    public:
+    long long int maxSumWithK(long long int a[], long long int n, long long int k) {
+        
+        long long int maxSum[n];
+        maxSum[0] = a[0];
+    
+        long long int curr_max = a[0];
+        for (long long int i = 1; i < n; i++) {
+            curr_max = max(a[i], curr_max + a[i]);
+            maxSum[i] = curr_max;
+        }
+       long long int sum = 0;
+        for (long long int i = 0; i < k; i++) sum += a[i];
+       long long int result = sum;
+        for (long long int i = k; i < n; i++) {
+            sum = sum + a[i] - a[i - k];
+          result = max(result, sum);
+            result = max(result, sum + maxSum[i - k]);
+        }
+        return result;
+    }
+};
